@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Nacapúl y el Laurel</title>
+    <title>El Nacapúl y El Laurel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -13,7 +13,11 @@
                     colors: {
                         primary: '#3b82f6',
                         secondary: '#f8fafc',
-                        dark: '#0f172a'
+                        dark: '#0f172a',
+                        'dark-bg': '#0f172a',
+                        'dark-card': '#1e293b',
+                        'dark-text': '#e2e8f0',
+                        'dark-border': '#334155'
                     }
                 }
             }
@@ -24,13 +28,13 @@
             transition: background-color 0.3s, color 0.3s;
         }
         .reader-content {
-            line-height: 1.8;
+            line-height: 1.7;
         }
         .chapter-title {
             scroll-margin-top: 80px;
         }
         .dark-mode {
-            background-color: #0f172a;
+            background-color: #0f172a !important;
             color: #f1f5f9;
         }
         .dark-mode .bg-white {
@@ -57,78 +61,94 @@
         }
         /* Estilos para los párrafos */
         .paragraph {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             text-align: justify;
+        }
+        /* Reducción de márgenes */
+        .container {
+            max-width: 95% !important;
+        }
+        header, footer {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .controls {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+        }
+        .reader-area {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .navigation {
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen">
     <!-- Contenedor principal -->
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="container mx-auto px-2 py-3">
         <!-- Encabezado -->
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">El Nacapúl y el Laurel</h1>
-            <p class="text-gray-600">100 años de Lágrimas, Risas, y Amor</p>
-            <p class="text-gray-600">Crónicas de un linaje</p>
+        <header class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-primary mb-1">El Nacapúl y El Laurel</h1>
+            <p class="text-gray-600 text-sm">100 años de Lágrimas, Risas, y Amor</p>
+            <p class="text-gray-600 text-sm">Crónicas de un linaje</p>
+            <p class="text-[9px] text-gray-500">© Bodfi 2026 Copyright</p>
         </header>
 
         <!-- Menús de configuración -->
-        <div class="flex flex-wrap justify-between items-center gap-4 mb-8 p-4 bg-white rounded-lg shadow-md">
+        <div class="flex flex-wrap justify-between items-center gap-3 controls bg-white rounded-lg shadow-md">
             <!-- Selector de capítulos -->
             <div class="w-full md:w-auto">
-                <label for="chapter-select" class="block text-sm font-medium text-gray-700 mb-1">Seleccionar Capítulo</label>
-                <select id="chapter-select" class="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                <label for="chapter-select" class="block text-xs font-medium text-gray-700 mb-1">Seleccionar Capítulo</label>
+                <select id="chapter-select" class="w-full md:w-56 px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
                     <!-- Opciones generadas por JavaScript -->
                 </select>
             </div>
 
             <!-- Selector de tamaño de fuente -->
             <div class="w-full md:w-auto">
-                <label for="font-size" class="block text-sm font-medium text-gray-700 mb-1">Tamaño de Fuente</label>
-                <select id="font-size" class="w-full md:w-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    <option value="text-base">Pequeño</option>
-                    <option value="text-lg" selected>Normal</option>
-                    <option value="text-xl">Grande</option>
-                    <option value="text-2xl">Muy Grande</option>
+                <label for="font-size" class="block text-xs font-medium text-gray-700 mb-1">Tamaño de Fuente</label>
+                <select id="font-size" class="w-full md:w-32 px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <option value="text-sm">Pequeño</option>
+                    <option value="text-base" selected>Normal</option>
+                    <option value="text-lg">Grande</option>
+                    <option value="text-xl">Muy Grande</option>
                 </select>
             </div>
 
             <!-- Selector de tema -->
             <div class="w-full md:w-auto">
-                <label for="theme-select" class="block text-sm font-medium text-gray-700 mb-1">Tema</label>
-                <select id="theme-select" class="w-full md:w-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                <label for="theme-select" class="block text-xs font-medium text-gray-700 mb-1">Tema</label>
+                <select id="theme-select" class="w-full md:w-32 px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
                     <option value="light">Claro</option>
                     <option value="dark">Oscuro</option>
                 </select>
             </div>
-
-            <!-- Botón de modo oscuro -->
-            <button id="toggle-dark-mode" class="mt-4 md:mt-0 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition flex items-center">
-                <i class="fas fa-moon mr-2"></i> Modo Oscuro
-            </button>
         </div>
 
         <!-- Área de lectura -->
-        <main class="bg-white rounded-xl shadow-lg p-6 mb-8 reader-content slide-in">
+        <main class="bg-white rounded-lg shadow-md p-4 reader-area reader-content slide-in">
             <div id="chapter-content">
                 <!-- Contenido del capítulo se cargará aquí -->
             </div>
         </main>
 
         <!-- Navegación entre capítulos -->
-        <div class="flex justify-between items-center mb-8">
-            <button id="prev-chapter" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Capítulo Anterior
+        <div class="flex justify-between items-center navigation">
+            <button id="prev-chapter" class="px-3 py-1 bg-primary text-white rounded-md hover:bg-blue-600 transition flex items-center text-sm">
+                <i class="fas fa-arrow-left mr-1"></i> Anterior
             </button>
-            <span id="chapter-indicator" class="text-gray-600 font-medium">Capítulo 1 de 3</span>
-            <button id="next-chapter" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition flex items-center">
-                Siguiente Capítulo <i class="fas fa-arrow-right ml-2"></i>
+            <span id="chapter-indicator" class="text-gray-600 font-medium text-sm">Capítulo 1 de 2</span>
+            <button id="next-chapter" class="px-3 py-1 bg-primary text-white rounded-md hover:bg-blue-600 transition flex items-center text-sm">
+                Siguiente <i class="fas fa-arrow-right ml-1"></i>
             </button>
         </div>
 
         <!-- Información del libro -->
-        <footer class="text-center text-gray-500 text-sm pt-4 border-t border-gray-200">
-            <p>Anecdotario BODFY - Disfruta de tu lectura</p>
+        <footer class="text-center text-gray-500 text-xs pt-2 border-t border-gray-200">
+            <p>El Nacapúl y El Laurel</p>
         </footer>
     </div>
 
@@ -298,13 +318,11 @@ Los tres recuerdos del Xocoyote. La primer imagen que tengo de mi apá es cuando
 
         // Variables globales
         let currentChapterIndex = 0;
-        let isDarkMode = false;
 
         // Elementos del DOM
         const chapterSelect = document.getElementById('chapter-select');
         const fontSizeSelect = document.getElementById('font-size');
         const themeSelect = document.getElementById('theme-select');
-        const toggleDarkModeBtn = document.getElementById('toggle-dark-mode');
         const chapterContent = document.getElementById('chapter-content');
         const prevChapterBtn = document.getElementById('prev-chapter');
         const nextChapterBtn = document.getElementById('next-chapter');
@@ -330,15 +348,6 @@ Los tres recuerdos del Xocoyote. La primer imagen que tengo de mi apá es cuando
             
             themeSelect.addEventListener('change', () => {
                 toggleTheme(themeSelect.value === 'dark');
-            });
-            
-            toggleDarkModeBtn.addEventListener('click', () => {
-                isDarkMode = !isDarkMode;
-                toggleTheme(isDarkMode);
-                themeSelect.value = isDarkMode ? 'dark' : 'light';
-                toggleDarkModeBtn.innerHTML = isDarkMode ? 
-                    '<i class="fas fa-sun mr-2"></i> Modo Claro' : 
-                    '<i class="fas fa-moon mr-2"></i> Modo Oscuro';
             });
             
             prevChapterBtn.addEventListener('click', () => {
@@ -383,7 +392,7 @@ Los tres recuerdos del Xocoyote. La primer imagen que tengo de mi apá es cuando
             });
             
             chapterContent.innerHTML = `
-                <h2 class="text-2xl md:text-3xl font-bold text-primary mb-6 chapter-title">${chapter.title}</h2>
+                <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4 chapter-title">${chapter.title}</h2>
                 <div>${formattedContent}</div>
             `;
             
