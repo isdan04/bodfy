@@ -67,7 +67,7 @@
     <div class="max-w-4xl mx-auto px-4 py-8">
         <!-- Encabezado -->
         <header class="mb-8 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">Lector de Libros</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">Anecdotario BODFY</h1>
             <p class="text-gray-600">Disfruta leyendo tus historias favoritas</p>
         </header>
 
@@ -127,7 +127,7 @@
 
         <!-- Información del libro -->
         <footer class="text-center text-gray-500 text-sm pt-4 border-t border-gray-200">
-            <p>Lector de Libros - Disfruta de tu lectura</p>
+            <p>Anecdotario BODFY - Disfruta de tu lectura</p>
         </footer>
     </div>
 
@@ -364,7 +364,7 @@ Los tres recuerdos del Xocoyote. La primer imagen que tengo de mi apá es cuando
             chapters.forEach((chapter, index) => {
                 const option = document.createElement('option');
                 option.value = index;
-                option.textContent = `Capítulo ${index + 1}: ${chapter.title}`;
+                option.textContent = `CAP. ${index + 1}: ${chapter.title}`;
                 chapterSelect.appendChild(option);
             });
         }
