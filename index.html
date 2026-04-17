@@ -1,40 +1,290 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mensaje del Escritor</title>
-  <!-- Tailwind CSS desde CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Animación fade-in */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in {
-      animation: fadeIn 1.2s ease-out forwards;
-    }
-    /* Animación bounce suave */
-    @keyframes softBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    .soft-bounce {
-      animation: softBounce 2s infinite;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Nacapúl y El Laurel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#f8fafc',
+                        dark: '#0f172a',
+                        'dark-bg': '#0f172a',
+                        'dark-card': '#1e293b',
+                        'dark-text': '#e2e8f0',
+                        'dark-border': '#334155'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .reader-content {
+            line-height: 1.7;
+        }
+        .chapter-title {
+            scroll-margin-top: 80px;
+        }
+        .dark-mode {
+            background-color: #0f172a !important;
+            color: #f1f5f9;
+        }
+        .dark-mode .bg-white {
+            background-color: #1e293b !important;
+        }
+        .dark-mode .text-gray-700 {
+            color: #cbd5e1 !important;
+        }
+        .dark-mode .border-gray-200 {
+            border-color: #334155 !important;
+        }
+        .dark-mode .hover\:bg-gray-100:hover {
+            background-color: #334155 !important;
+        }
+        .dark-mode .reader-content {
+            color: #e2e8f0;
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Estilos para los párrafos */
+        .paragraph {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        /* Reducción de márgenes */
+        .container {
+            max-width: 95% !important;
+        }
+        header, footer {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .controls {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+        }
+        .reader-area {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .navigation {
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 flex items-center justify-center min-h-screen p-6 font-sans">
-  <div class="text-center max-w-xl fade-in">
-    <div class="bg-white shadow-lg rounded-xl p-8 border border-indigo-200">
-      <p class="text-xl md:text-2xl font-semibold text-gray-800 leading-relaxed">
-        El escritor está martillando palabras y soldando párrafos. ¡Pronto abrirá la puerta!
-      </p>
-      <div class="mt-6 soft-bounce">
-        <span class="inline-block text-4xl">🔨📖</span>
-      </div>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+    <!-- Contenedor principal -->
+    <div class="container mx-auto px-2 py-3">
+        <!-- Encabezado -->
+        <header class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-primary mb-1">El Nacapúl y El Laurel</h1>
+            <p class="text-gray-600 text-sm">100 años de Lágrimas, Risas y Amor</p>
+            <p class="text-gray-600 text-sm">Crónicas de un linaje</p>
+            <p class="text-[9px] text-gray-500">Bodfi. 2026. Copyright.</p>
+        </header>
+
+        <!-- Menús de configuración -->
+        <div class="flex flex-wrap justify-between items-center gap-3 controls bg-white rounded-lg shadow-md">
+            <!-- Selector de capítulos -->
+            <div class="w-full md:w-auto">
+                <label for="chapter-select" class="block text-xs font-medium text-gray-700 mb-1">Seleccionar Capítulo</label>
+                <select id="chapter-select" class="w-full md:w-56 px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <!-- Opciones generadas por JavaScript -->
+                </select>
+            </div>
+
+            <!-- Selector de tamaño de fuente -->
+            <div class="w-full md:w-auto">
+                <label for="font-size" class="block text-xs font-medium text-gray-700 mb-1">Tamaño de Fuente</label>
+                <select id="font-size" class="w-full md:w-32 px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <option value="text-sm">Pequeño</option>
+                    <option value="text-base" selected>Normal</option>
+                    <option value="text-lg">Grande</option>
+                    <option value="text-xl">Muy Grande</option>
+                </select>
+            </div>
+
+            <!-- Selector de tema -->
+            <div class="w-full md:w-auto">
+                <label for="theme-select" class="block text-xs font-medium text-gray-700 mb-1">Tema</label>
+                <select id="theme-select" class="w-full md:w-32 px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <option value="light">Claro</option>
+                    <option value="dark">Oscuro</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Área de lectura -->
+        <main class="bg-white rounded-lg shadow-md p-4 reader-area reader-content slide-in">
+            <div id="chapter-content">
+                <!-- Contenido del capítulo se cargará aquí -->
+            </div>
+        </main>
+
+        <!-- Navegación entre capítulos -->
+        <div class="flex justify-between items-center navigation">
+            <button id="prev-chapter" class="px-3 py-1 bg-primary text-white rounded-md hover:bg-blue-600 transition flex items-center text-sm">
+                <i class="fas fa-arrow-left mr-1"></i> Anterior
+            </button>
+            <span id="chapter-indicator" class="text-gray-600 font-medium text-sm">Capítulo 1 de 2</span>
+            <button id="next-chapter" class="px-3 py-1 bg-primary text-white rounded-md hover:bg-blue-600 transition flex items-center text-sm">
+                Siguiente <i class="fas fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+
+        <!-- Información del libro -->
+        <footer class="text-center text-gray-500 text-xs pt-2 border-t border-gray-200">
+            <p>El Nacapúl y El Laurel</p>
+        </footer>
     </div>
-  </div>
+
+    <script>
+        // Datos de ejemplo de capítulos
+        const chapters = [
+            {
+                title: "SOSÁN",
+                content: `
+                Los tres recuerdos del Xocoyote. La primera imagen que tengo de papá es cuando tenía cuatro años. Mientras yo dormía en un catre de lona, bajo la sombra de un mango, él me  espantaba los moscos aspaveando el aire con su sombrero ¿Cómo podría el candor de un niño olvidar esa escena? Ahí supe que él me quería. El segundo recuerdo sucedió a mis cinco años. Me llevó por primera vez a las tierras rumbo a Las Mamias, íbamos caminando, la primera parada fue en un árbol frente a la tierra de Felipito, el levanta pesas, arrancó unas espinas y las incrustó en su sombrero ¿Para qué son, apá?, pregunté. "Ahora lo verás", me dijo. Yo conducía un carrito largo como de un metro, hecho de carrizo y alambre, con volante y ruedas que él mismo me construyó ¡Iba hecho la mocha! ¡rrruuummm!, papá tenía cincuenta años, un tostón con arrugas y cicatrices de batallas pasadas, era una mañana rural, sin prisas, el viento susurraba entre los chamizos, ¡rrruuummm!, un canal de agua cantaba a unos metros, chirrr, chirrr de insectos, cu, cu, cu, cu de palomas, creo que también llevaba un balero o un yo-yo, no estoy seguro, ¡rrruuummm! La segunda parada fue en el dren de La Reforma, donde papá se bajó con cuidado para arrancar un tule y ahí sucedió la magia, mi más brillante recuerdo de ese día. Cortó un pedazo de tule de unos diez centímetros, lo torció tantito, tomó una espina de su sombrero y la encajó en el centro del tule ¡Me hizo una hélice y me dijo que era un avión! Fuí el niño más feliz del mundo, sentía que volaba de verdad rugiendo: ¡ñññiiieeeoommm!, cuanto más corría más rápido giraba y más alto volaba, imaginaba que era una de esas avionetas que pasaban por el cielo galerístico y tiraban papeles. Ese día, entre carritos y avioncitos, supe que yo lo quería ¡ñññiiieeeoommm! Años después, viviendo en Cócorit, les hice avioncitos de tule a mis hijos y construí un carrito de carrizos. Aún los conservo. La tercera remembranza estuvo genial. Yo tenía seis años, fue una teletransportación ¡El puente Einstein-Rosen sí existe! Era de noche y estando en el patio de la casa, bajo las limas, empezó a salir la luna en el horizonte, papá apuntó al cielo y me dijo: "Mira Topo, allá está el conejo de la luna", yo volteé buscando la figura pero no lograba verlo. Antes que perdiera el interés, me explicó: "¿Ves las orejas?, están arriba ahí mira, y abajo están las patas ¿Lo ves?" ¡Síii!, contesté con asombro. No parpadeaba. Imaginaba. No comprendía. Fascinado pregunté: ¿Papá, allá están los gringos?, "Sí", me dijo con ternura. Esa noche fue trascendental. Magia extasiante. Deslumbrante. Ahí supe que la vida es una fantasía, que papá era una maravillosa fantasía. Era un presagio. Ya murió y sigo escuchando sus risas ¿Ví hombrecitos en la Luna? ¿Caminaban dentro de mi cabeza? No sé qué pasó por mi tatema, nunca había visto televisión, no conocía los comics pulp fiction y aún faltaba un año para ir a la escuela. El auto más grande que había visto era el carro jalado con caballos de los vecinos Ventura y Caciano, sus placas decían “Tracción animal". El transporte más rápido donde me había subido era la carreta de Don Santos, que relinchaba a 10 kph por el Tábare-Galera-China, con  llantas  nalga de tigre, para que llegaran las conchas y cochitos calientitos ¿Acaso imaginé que yo volaba? ¿Doblé el espacio y viajé a velocidad warp a la luna? Creo que por ese pasaje al Topo le gusta "Dune", "Star Wars" y " The Expanse” ¡Te amo plan Zeta!, gritaba Plankton, cuando creía que por fin, robaría la receta secreta de la Cangreburger. 
+Papá es Sosán. Reservado. Diligente. Contemplativo. Es la risa que florece del silencio, la alegría que irrumpe sin causa y la vida sin pretensiones. Papá es la Locura. Mamá la Cordura. En el amor hay grietas, en el enojo hay semillas. Papá es el Tao, es el agua que se infiltra, no impone el rumbo, pero sostiene el río. La familia es un círculo donde la luz se esparce en la sombra. El Tao es la unión del yin y el yang. Uno es raíz, otro viento, uno es fuego que protege, otro agua que consuela. Mitad abrazo, mitad distancia. Sin papá, la historia de la familia sería diferente. El matrimonio precisa de un cómplice, un aliado que respalde sin dudar y proteja sin desertar. Para mi mamá, ese hombre fue don Manuel, más conocido en el mundo del salitre, el chamizo y los drenes, como el "Bosam sisiboqui", apodo en dialecto mayo que significa "Bolsa de fierro". Una especie en extinción. Arcilla que rehúsa la forma. Bicho raro que no vino a encajar. Nunca he conocido a alguien tan desprendido de las vicisitudes de la vida. Libertad intrínseca irrompible. Si  mamá quería conectarnos al mundo, papá cortaba los cables. Trabajador incansable por más de setenta años ¿Por qué nunca se cansaba? Porque amaba trabajar. Cultivar la tierra era su oración ¿Su templo?  El cielo en su sombrero. Cristo dice: “Dónde está tu tesoro, allí estará también tu corazón". Papá era la tierra, lo veía en sus ojos, se paraba en el bordo del canal, él no veía tierra, él era la tierra. Trabajador sin horarios, oficinas, patrones o vicios. Jamás durmió fuera de casa, nunca se desveló, salvo por trabajo o sus hijos. Con solo primaria, anclado en un ejido, rodeado de trigales y maizales, erigió un linaje que lo vió vivir, dormir y morir bajo el abrigo del hogar. Ahora veo hombres con postgrados abandonando a su esposa e hijos. Papá es mil veces más hombre que esas frágiles conciencias ¿O acaso vas a decir que los tiempos han cambiado? Si es así, entonces no eres frágil, eres la ciudad, piensas como las masas, qué lástima de título ¡Sigues en parvulito! El Bolsadefierro fue un tipo sin calendario, llegó a este mundo con la revolución mexicana, pisó tierras de nativos milenarios ¡Más de mil años de huellas! Para él no había días festivos ni fines de semana ¡Qué gran enseñanza para los Godínez enjaulados de hoy! Algunos Boomers y Millenials dirán: ¡Qué aburrido! Los Centennials preguntarán: ¿Qué es el matrimonio? Pero los astutos Alfa pensarán: ¿Es posible ese lujo personal? El “Hsin Hsin Ming” de Sosán es el retrato de papá.
+Sosán me enseñó, sin pizarrón ni intención, lo que el mundo ha perdido: encontrar la belleza en la soledad, conservarse intacto en el mundo del anhelo y el halago, y hablar sin insinuaciones ni vaguedades ¡Sí!, así es ¿Lo notaron? Papá era un estoico susurrando a tu oído, un silente Sosán del monte Sikóng. Místico. Mudo. Innato. Tan natural que ni él mismo lo sabía. No conocía la palabra sabiduría y ahí residía su grandeza. Es una rara combinación de Lao Tsé y Epicteto. Él me hizo filósofo ¡Gracias, mi viejo! Fue un hombre difícil, muy difícil de leer. Una tesis doctoral. La personalidad se desvela como cebolla, capa tras capa, hasta llegar donde el ser se reconoce puro y desnudo. Mamá era fácil de descifrar, ella fue una manifestación del mundo. Papá, llano en la superficie, complejo en las profundidades, parecía envuelto en un aura insondable. Lo percibía cuando lo llevaba en su vocho al Oraba. En casa lo volvía loco el entorno, pero en el vocho, entre tierras, chamizos y canales, se asomaba el gran hombre que fue ¡Qué afortunados somos los que vimos su misterio!  Yo lo quise mucho. Lo extraño, fue mi primer amigo. Mamá me esculpió. Él me transformó. Jamás habló de Dios. Gracias a él lo encontré. En el camino al Júpare, yo manejaba y él dormía. Entrelazaba sus manos, respiraba sin ruido. No dormía, algo sucedía. Tardé en verlo, era un aura de paz ¿El capacete lo arropaba? Bajaba las revoluciones al motor, ansiaba que ese momento durara más. Dejaba sonar el radio, buscaba un camino sin permanente para no perturbarlo. Hace veinte años me empezó a pasar lo mismo, dicen los gurús hindúes que se hereda. Lo empiezo a creer. Es transformador. Papá es de oriente, mamá de occidente. Mamá se enamoró de Sosán, cuando lo vió montado en su mula Noragua, gritó en su cabeza: “Éste hommmbre no se toca, te lo juuuro amiga míaaa, defenderéee su amor como una locaaa” ¿La chispa inicial? Mayo de 1938 ¿El único testigo? Un inmenso Laurel ¿Los ingredientes secretos? Una mirada cándida femenina y un fulgor indómito masculino. Sosán, 19 mayos. Scarlett, 13 eneros ¡Extraño esa lozanía! Esa noche, las cuerdas de Los Panchos arrullaron sueños idílicos: “Béeesameee, bésame muuucho, como si fuera esta noche la úuultima vez".
+Papá es Shrek. Impulsivo. Valiente. Noble. Un grosero extremo. Mamá decía que tenía boca de infierno. Un día se agarraron del moco, y papá gritó desde el patio: "Les voy a tirar un violín por la ventana". Mamá me preguntó: ¿Qué es eso, Rodolfo? Fingí demencia, era mejor callar. Lo que más me divertía del Jefe es que se reía de mis locuras, no le asustaba que escuchara Heavy Metal, cortara camisetas o usara shorts. Que vistiera como cholo, me rapara o tatuara. Nomás agarraba cura. Recuerdo que decía: "Me gusta la música del Pito, le voy a poner un estéreo al carro". Mamá mostraba su cara bipolar, una mueca entre enojo y risa pícara contenida ¡Estaban curados mis viejos choris!. A Shrek no le gustaba el jardín de mamá, lo cuidaba a disgusto. ¡Pitooo, te necesito, luegooo!, me hablaba y me ponía a podar rosales y cortar el zacate. Para eso, me daba unas tijeras y un machete que tenía como cien años, envuelto hasta el mango con sus adoradas camisetas agujereadas ¡Inventó la camiseta eólica! Era un machete sin filo y oxidado, los remaches de la cacha se movían ¡Cuidado con darle a una piedra!, podría perder el filo "¡Uuujjjaaa! ¿Qué pasó?”, terminaba todo ampollado, quería un buen trabajo, las orillas del zacate tenían que ser derechitas y del mismo ancho, me gustaba complacerlo, éramos estetas los dos. Mamá, me pidió un día que matara el guajolote de navidad, lo estuvo engordando un mes en la piocha del patio trasero ¡Y papá sacó el maldito machete amellado! Pobre güíjolo, lo emborraché con vino y ya que andaba como papalote sin cola, le tuve que dar como diez machetazos porque ¡El pinchi machete no cortaba! Le molí a golpes el buche y terminé bañado en sangre ¿Y Shrek? ¡Riéndose de mí!.
+¡Cómo chinnngan! ¡Todos! Era su grito de guerra, su amor por la soledad le hacía protestar ante las fiestas y sólo se calmaba cuando veía que prendían el carbón, mamá decía: "Ya se le alzaron las orejas al lobo". La carne roja lo volvía loco, seguro se llevó a la tumba un millón de vacas fileteadas. Hombre de gran apetito, se acercaba al asador  al estilo Fox y Castro:  "Cenas y te vas". Cuando estaba en secundaria, mamá hacía tortillas de harina y me daba en el desayuno, antes de las siete de la mañana. A mediodía llegaba y ya se habían acabado. Por meses mamá le alcahueteó a Shrek hasta que metí presión. Mamá lo delató ¡Papá se las robaba, las escondía en su vitrina del año 1945, y se las comía a escondidas en el limón! Hacía como si estuviera viendo el árbol  mientras engullía la tascari. Ahí lo caché con las manos en la masa. Era un vaquetón. Desde entonces, se empezó a mochar y ahora mi amá y yo éramos los alcahuetes. Nos fue bien un tiempo, lo sé porque la Jefatura dejó de decir: "Este hombre me quiere hacer la vida de cuadritos". El box era el deporte que le gustaba ver a Shrek, se apasionaba ¡Le valía madre! Parecía un niño chiquito ¡Se metía en la pelea! Recuerdo que una noche veíamos en la TV, de cuatro patas marca Telefunken, la pelea de Pedroza vs Zárate por allá a finales de los 70s, cuando un round se puso intenso el viejo se empezó a levantar de la silla capeándose  los golpes y tirando ganchos y sabanazos. Mamá lo veía desde la cocina, por la escotilla de la puerta, se moría de la risa. Shrek imaginó que Zárate era el Güero Cózarit en aquel dren, y le volvió a surtir unos  moquetazos. Ganó Pedroza. Papá repitió toda la semana: "Peeedrooozaaa". Mamá meneaba la cabeza, agitaba su dedo índice alrededor de la oreja, movía los labios sin articular y decía: "Está desconchinflado". 
+Una vez nos tocó a Nico y a mí verlo pelear por el agua de riego en el poblado La Esquina. Papá había puesto sus costales en la compuerta del Oraba, pero no subía lo suficiente el nivel del agua, algo pasaba en el canal ¿Pero qué chingado?, dijo consternado. Nico era el chofer, Shrek el copiloto y yo de mitotero. Era de noche, fuimos a revisar compuertas. En una de ellas, papá encontró un joven girando la rueda del volante. Empezó el cotorreo. El intruso, un ingeniero recién desempacado, le explicó a papá que, según la mecánica de fluidos, era posible regar ambas parcelas como él lo había ajustado. Todos sabemos que convencer al Sisiboqui estaba ¡Cabrón! El malnacido era un novato, respetuoso pero insistente. Papá ya tenía cincuenta años siendo agricultor y en su gremio empírico se rumoraba que: "No le puedes enseñar rezos a un cura". El chilorio del "Porky's" taladraba en su cabeza: ¡Dale en el hocico! Se dijeron de palabras, el malhechor con respeto y papá sin ceder un milímetro. Pasó un minuto. El chilorio perforó su cráneo ¡Quería salir! y Shrek gritó: ¡A mí enséñame a parir! Nico y yo nos asustamos. Fue un gritote, el bribón dejó todo como decía papá y se fue. Seguro terminó en un diván terapéutico. Papá, felizmente encabronado pudo regar sin problemas su cultivo. Se le bajó el chilorio. Pelear le despertaba el apetito. Cenó chicharrones del "Porky's" con unas tortillucas de harineruca. 
+Aborrecía que Elmer dijera: "Papi, te quiero". Reprobaba con la cabeza y gruñía: "Cabrón jaretudo". Repelía a los mandilones, sinónimo de inservible para su léxico. Tenía apodos para sus cuñados que mamá defendía con tanto ahínco ¡Alégale al ampayer! Era de alto calibre, no le ganabas una, Jorge le decía el Musulungo Herrera. Un día se hizo análisis de sangre y salió fuera de rango, rezongaba: ¿Qué saben esos doctores? Mamá se divertía: "Mira, Pito, ahí va el químico". Era lo que él creía y punto. Esculpido en una pieza. Mi hermano Elmer, preocupado por su salud, lo llevaba al homeópata, le compraba una bolsa de chochos y regresaba a México con la tranquilidad de cuidar a su genitor. Al otro día, Shrek las tiraba a la basura. Mamá lo regañaba. No hacía caso a nadie. Indómito. Mustang en la llanura, ¡Hiiii! ¡Hiiii! ¡Frrrttt! El pavimento, su pradera. Huatabampo, su matorral. ¡Ayuuu, Silver! 
+Un día estuvo a punto de trenzarse a golpes con el Nicho, un indio Mayo más alto, fuerte y joven que él. Estaban discutiendo. Papá había visto huellas de huarache Yoreme y le preguntaba si sabía algo. El indio se sintió ofendido y empezó el refuego. Discutieron. Nunca hubiera imaginado a mi papá pelearse a golpes con alguien hasta que le pregunté ¿Oye apá, por qué te subiste al bordo?, me explicó: "Es que este indio es muy traicionero, estaba esperando que me soltara un cabronazo, me puse en el bordo para estar a su altura" Ahí supe que papá era más chingón que el Santo y Kaliman. Peleaba con Chevo López, su vecino de parcela con boca prominente. Le gritaba cuando veía pasar su Cheyenne ¡Topo, hijo de tu topa madre! Nunca nos daba raite. Nos regresábamos en el camión del Tínguili. El chofer que lo consentía era el Chalo. Yo ventana. Él pasillo. Venir en camión con el "Capo di tutti i capi", chalaneando en el mismo asiento ¡No tiene precio! Lo traigo en la médula ¡Topo, métete la Cheyenne por el nudo de globo! Mamá se asoció con Shrek ¿El pacto inicial? El lunes 16 de noviembre de 1942 a las nueve de la noche ¿El único testigo? Un Nacapúl bajo la luna creciente. Esa noche, el viento entonaba el bolero: “Como un rayito de luna, entre la selva dormida, así la luz de tus ojos, ha iluminado mi pobre vida”.
+Papá es Sheldon Cooper. Obsesivo. Juguetón. Directo. ¿Sabían que papá tenía un sentido estético y de orden inaudito? Hay quienes lo señalan  erradamente como "idioso", pero andan como a tres cuadras del desfile. Lo que no se comprende, se juzga, un mal hábito de la materia gris. La palabra correcta es esteta, meticuloso, epicúreo. No era él. Era su cerebro. Sus circuitos neuronales ansiaban la armonía, parecía capricho pero era virtud. Tal virtud lo hacía único, y ese mismo rasgo nos mantuvo unidos toda la vida. Qué maravilla, ¿no? Los gnósticos enseñan que los cuerpos resuenan en un hilo invisible que los teje en una sinfonía ¿Verdad inescrutable o fumada de hookah? Cuando tenía ochenta y cinco años, me dijo debajo de un mezquite: "Qué batalla Pito, ya no puedo hacer las cosas bien, qué lata ser así". Sólo quería subirse al vocho sin salitre en los zapatos. No quería ensuciar el tapete. No podía sacudirlos, me dispuse a ayudarlo. Había una manía en él, ya empezaba a sufrir por ello. Parecía perfeccionismo ¿Quizá estética, pulcritud o tal vez escrúpulo? ¿Por qué los bordos de riego debían ser uniformes? ¿Había alguna armonía que yo desconocía? Nunca lo supe hasta mi madurez. La película "Mejor imposible" con Jack Nicholson, lo retrata de manera humorística. Microsoft es más serio, lo llamaría un editor WYSIWYG ¿Qué opina su Xocoyote? ¡Qué es cómo el cajero automático!
+Sus cosas no las podías tocar, era letal su embestida. Se enchilaba. La manguera del agua debía tener diez vueltas, no ensuciarse ni gotear. El boiler súper oxidado tenía un marro aplastando el botón del piloto. Una vez lo moví para curiosear cómo funcionaba y me quemé las pestañas, dejaron de decirme el "pixie". Era una falta grave tocar su ropa, comida, enseres ¡Todo!  Recuerdo los periódicos y el abanico que metía al baño para darse un regaderazo. Las viejisimas chanclas amarradas con trapos deshilachados. El bate de beisbol infantil en lugar de bastón. La crema “Nivea” que lo hacía brillar como bola de billar ¿Por qué se ponía puntos y paseaba por la casa? El memorable, inseparable y "Cuidado con el perro, prohibido tocar, radioactivo" cubreasientos ¿De dónde venía su gran valor? ¿Se lo regalaría la señora del mercado que le gustaba? Debe ser eso. Hormona mata neurona. Lo relajaba más que el "Veganin". Su imprescindible sombrero de  "Los Cuatro Vientos", el chorizo del "Diablo" , los chicharrones y chilorio del "Porky's", la "Coca Cola" y el "Nestea". Sentarse en su silla para ver TV era delito federal. Kameta se atrevía a sentarse para subir el cortisol. La usamos para novatear a Héctor con botas, esposo de mi sobrina Paty de botas, pero no mordió el anzuelo, queríamos que papá se enchilara. Fallamos esa vez. Héctor traía botas picudas para andar a tono con los sonorenses. Venía de México. "Estás montado al revés, Héctor", le dijo Rolando, cuando montó un caballo ¡Con razón lo veía tan cachetón! La lista prohibida sigue ¡Ya párale, Sheldon Cooper! El cepillo de dientes lo lavaba con agua hirviendo y lo enrollaba con papel de baño para guardarlo. Los galereños decían que papá le echaba agua hervida al radiador del tractor. No había zona desmilitarizada en la casa. La pila del lavadero era campo minado. Se convertía en "Hellboy" si te veía cerca de ella. Aparecía de repente entre los matorros del "Hazme como quieras", gritando con una voz muy gruesa y altos decibeles ¡Eiiit! ¿Quién está en la pila? ¡Uuujjjaaa! ¡Gela! ¿Pero qué chingado? Se armaba el polvorín. ¡Oía todo! El chakra vishuddha le zumbaba. Kameta era un picahuyendo, lo desafiaba. Un día se le aflojó el esfínter. Casi lo agarran "in fraganti". Se lavaba la cabeza en el lavadero. Lo ví correr de puntitas, en la oscuridad, se escondió detrás del limón. Una ocasión le puse el dedo a papá con mi amá ¡El viejo estaba cortándose las uñas de los pies con una segueta! ¡Sí! Leyeron bien ¡Una segueta para cortar fierro! tuve que tomar toronjil para bajar el PH. 
+Me tocó desayunar con él muchos años, me preguntaba con picardía cuando estaba en la prepa ¿A ver, Pito, cuántos huevos me he comido en toda mi vida? Le contestaba: "A ver, apá,  tienes sesenta y dos años, llevas sesenta años comiendo dos huevos diarios, entonces 60x365x2 son 43,800 huevos". Soltaba unas carcajadotas que hacía crispar los pelos de mi amá, quién hacía su mueca de disgusto, presumiendo  que había cosas más importantes que atender ¡Era un buffet de risas esos desayunos! Mamá entre chispas y bastonazos salía de la cocina murmurando: "De que haya dos locos, mejor que haya uno". Se ponía a ver la TV Sony con control remoto, Pedroza ya estaba retirado, al igual que las teles patonas. Se asomaban los cambios de los 80s. Mi ancestro seguía impávido. El Judas Priest rasgaba el blues con "British steel". José José sacudió a la raza de bronce con su icónico "Secretos". Margaret Thatcher, espetaba que las Malvinas, al igual que sus tetas, eran intocables. ¿Y mi ancestro? sin derogaciones. Y así calculábamos los kilos de carne, litros de café y metros de chorizo que había engullido. Papá me enseñó que la vida es una broma del diablo, lo mejor es reírse de ese juego y Dios aparecerá de mil maneras. Alegría. Paz. Amor. Mis siglas favoritas, me recuerdan a mi APÁ. Siempre me pregunté ¿Qué le pasa a mi amá si estamos tan felices desayunando? ¿Por qué no se une a la fiesta? A la fecha, ronrronea en mi tatema la frase del Dr. Emmet Brown: "Voy a destruir ésta máquina infernal y estudiar el otro gran misterio del universo: La mujer".
+Sheldon disfrutaba los cómics tanto como las radionovelas ¿Herencia de la nana Socorro? Me tocó su afición por "Kaliman, el hombre increíble" ¡El que domina la mente lo domina todo! Cuando estaba en secundaria un amigo me prestó una revista. Papá la vió y le gustó. Dos años leímos la revista ¡Serenidad y paciencia, mucha paciencia, Solín! Me mandaba al mercado a comprarla, sin falta. Leímos las historietas de “Karma, el demonio del Tíbet",  “Los misterios de la muralla china", “El faraón sagrado" y  “La bruja blanca” ¡Sólo el cobarde muere dos veces! Presiento que de ahí viene mi gusto por la ciencia ficción. Creo que también leímos juntos " Rarotonga” de la fotonovela: "Lágrimas, risas y amor" y la enigmática "Duda” que hablaba de extraterrestres y ovnis. Papá era friki, mamá fresita. Papá amaba las historias raras, mamá el romance ¡Me encantaba Sheldon!, lo voy a incluir en los créditos. También cantaba cuando se peinaba en el espejo, tarareaba y cantaba con sus boxers amarillos ¿Eran los únicos o todos eran del mismo color?, mojaba el destramador, se peinaba y tarareaba, creo que eran canciones de la XEW. Papá, le pregunté varias veces: ¿Qué artista te gusta más? Siempre decía lo mismo "Como actor, Pedro Infante y como cantante, Javier Solís" ¿Y de qué murió Javier Solís?, lo sonsacaba, "De lo malo que se vió", respondía con cara de travieso. Mamá se desconcertó con Sheldon. Sus roces y susurros se entrelazaron, danzando la cotidiana discordia de su unión. Papá y mamá son tripolares. El capítulo Scarlett explica la mutua tripolaridad ¡Juntos son el condensador de flujo de Emmet Brown!.
+Una vez lo llevé al oftalmólogo y le preguntó: ¿Qué es lo que ve en ésta pared, señor? Papá le dijo: "Cagarruta de mosca". El doctor, extrañado, me preguntó: ¿Qué dice tu abuelo, muchacho? "Son puntos negros". Contesté. Palabras domingueras del Sisiboqui. La gente creía que papá era mi abuelo. A mamá le decía: "Gela". A sus hijos: Elmer, "Cabeti". Beto, "Veneno". Jorge, "Boca de Bagre". Aidé,  "Mula Chara". Adriana, "Tapona". Pancho, "Caciano". Manuel, "Nico". Rolando, "Indio". Angelina, "Niña" y, a mi, "Topo". Si todos estudiamos y salimos a buscar futuro a las ciudades, se lo debemos a la complicidad de Evangelina con el Bolsasola, le decía Remberto. Pobre amigo, lo dejamos en la vil chía, nos regaló  su trabajo de más de medio siglo. Por eso vivimos bien y hasta Europa, Asia, Sudamérica y "Niú Jámchair" han viajado algunos ¿Y ahora los jóvenes no quieren casarse, comprar casa o tener hijos? Papá diría ¡Qué gente tan ordinaria, ya se pelan, pué perico!. Es admirable el trabajo de papá. Desde casa es imposible verlo ¿Por qué nuestra familia siempre tuvo los medios para cumplir los sueños que hoy son realidad? Algo que enseña la historia es que el ser humano es ingrato. ¿Por qué luchaba papá? ¿Por sus hijos, su esposa o por sí mismo? Nunca le pregunté. Sosán, Shrek y Sheldon  trabajaron sin cesar, lucharon en crisis y adversidades, ahuyentaron víboras y tarántulas mientras comíamos en las tierras, apartaron lenguas viperinas del hogar, se desvelaron por sus hijos y los cultivos, corrieron a un asesino de la casa ¿Era Manuel el Ojo de Vidrio? Me hizo avioncitos con tule y espina, carritos de carrizo con alambre, me compró cómics y los leímos juntos, me llevó a la luna, me contó mil chistes, dichos y picardías, le gustaba llevarme a rondar morras que me dilataban la pupila ¿Era Manuel un Friki? Papá me dejó hacer cosas que mamá no permitía. Nunca me dió dinero para ir a la escuela o las fiestas y lo agradezco, eso me apartó de vanidades fútiles. Salía en la madrugada a rescatar a sus hijos de bailes para que no faltaran a la escuela. Cuidaba el chícharo de sol a sol tan solo con unos burritos y café en una pepsi ¿Era Manuel un Fakir? ¡Había inventado el ayuno intermitente!
+A las mujeres les falta salir de su burbuja de comodidades y percibir  el entorno de muchos oficios masculinos, estar en casa no produce esa empatía. El Bolsa era un hombre con sangre extremeña, sin modales, insensible al halago, que aborrecía la mentira y gruñía: "Puro enredo ustedes". Esa frase me hizo preguntarme por décadas: ¿Por qué papá se enojaba sin motivo? La respuesta llegó cuando Urano le dió media vuelta al sol. A mis cuarenta años lo comprendí con claridad. Papá detestaba el engaño y la manipulación ¿Entonces, será cierto que los hombres son de Marte y las mujeres de Venus? Sabiamente concluí: "No le rasques los huevos al tigre, déjalo ser tigre porque si le rascas, te embestirá". Llegamos al fin de la reseña. Papá transformó mi mundo, mi familia, hogar, profesión. Mi pasión por la filosofía, amor por la naturaleza, cuidado de los hijos, disciplina, austeridad y picardía vienen de él.  ¡Por los clavos de Cristo! ¡Le debo más que a Coppel! Es mi héroe y lo sigo queriendo profundamente aún a mis sesenta y dos años ¿Un hijo puede ser más feliz?. Todo eso era don Manuel Barreras Millán. Como hijo, amaba a Sosán, respetaba a Shrek y con Sheldon, me divertía.
+                `
+            }
+            // {
+            //     title: "SCARLETT",
+            //     content: `
+
+            //     `
+            // }
+        ];
+
+        // Variables globales
+        let currentChapterIndex = 0;
+
+        // Elementos del DOM
+        const chapterSelect = document.getElementById('chapter-select');
+        const fontSizeSelect = document.getElementById('font-size');
+        const themeSelect = document.getElementById('theme-select');
+        const chapterContent = document.getElementById('chapter-content');
+        const prevChapterBtn = document.getElementById('prev-chapter');
+        const nextChapterBtn = document.getElementById('next-chapter');
+        const chapterIndicator = document.getElementById('chapter-indicator');
+
+        // Inicializar la aplicación
+        function initApp() {
+            populateChapterSelect();
+            loadChapter(currentChapterIndex);
+            updateChapterIndicator();
+            
+            // Event listeners
+            chapterSelect.addEventListener('change', () => {
+                currentChapterIndex = parseInt(chapterSelect.value);
+                loadChapter(currentChapterIndex);
+                updateChapterIndicator();
+            });
+            
+            fontSizeSelect.addEventListener('change', () => {
+                const sizeClass = fontSizeSelect.value;
+                chapterContent.className = `reader-content ${sizeClass} slide-in`;
+            });
+            
+            themeSelect.addEventListener('change', () => {
+                toggleTheme(themeSelect.value === 'dark');
+            });
+            
+            prevChapterBtn.addEventListener('click', () => {
+                if (currentChapterIndex > 0) {
+                    currentChapterIndex--;
+                    loadChapter(currentChapterIndex);
+                    chapterSelect.value = currentChapterIndex;
+                    updateChapterIndicator();
+                }
+            });
+            
+            nextChapterBtn.addEventListener('click', () => {
+                if (currentChapterIndex < chapters.length - 1) {
+                    currentChapterIndex++;
+                    loadChapter(currentChapterIndex);
+                    chapterSelect.value = currentChapterIndex;
+                    updateChapterIndicator();
+                }
+            });
+        }
+
+        // Llenar el selector de capítulos
+        function populateChapterSelect() {
+            chapters.forEach((chapter, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `CAP. ${index + 1}: ${chapter.title}`;
+                chapterSelect.appendChild(option);
+            });
+        }
+
+        // Cargar contenido del capítulo y formatear párrafos
+        function loadChapter(index) {
+            const chapter = chapters[index];
+            
+            // Dividir el contenido en párrafos y formatear
+            const paragraphs = chapter.content.split('\n').filter(p => p.trim() !== '');
+            let formattedContent = '';
+            
+            paragraphs.forEach(paragraph => {
+                formattedContent += `<p class="paragraph">${paragraph.trim()}</p>`;
+            });
+            
+            chapterContent.innerHTML = `
+                <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4 chapter-title">${chapter.title}</h2>
+                <div>${formattedContent}</div>
+            `;
+            
+            // Aplicar clase de animación
+            chapterContent.classList.add('slide-in');
+            setTimeout(() => {
+                chapterContent.classList.remove('slide-in');
+            }, 300);
+        }
+
+        // Actualizar indicador de capítulo
+        function updateChapterIndicator() {
+            chapterIndicator.textContent = `Capítulo ${currentChapterIndex + 1} de ${chapters.length}`;
+        }
+
+        // Alternar tema claro/oscuro
+        function toggleTheme(dark) {
+            if (dark) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // Iniciar la aplicación cuando se carga el DOM
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
 </body>
 </html>
